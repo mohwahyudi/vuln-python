@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  vulnerable-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.vulnerable
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./:/app
+    environment:
+      - FLASK_APP=vulnerable_app.py
+    command: python vulnerable_app.py
+    networks:
+      - app-network
+
+  secure-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./:/app
+    environment:
+      - FLASK_APP=secure_app.py
+      - PRODUCTION=true
+      - SECRET_KEY=secure_random_key_for_demo_only
+      - ADMIN_PASSWORD=SecureAdminPassword123!
+    command: python secure_app.py
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

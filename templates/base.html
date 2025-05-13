@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Security Demo App{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        form {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            padding: 8px;
+            margin: 5px 0 15px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .nav {
+            display: flex;
+            list-style-type: none;
+            padding: 0;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+        .nav li {
+            margin: 0;
+        }
+        .nav a {
+            display: block;
+            padding: 10px 15px;
+        }
+        .nav a:hover {
+            background-color: #ddd;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>{% block header %}Security Demo App{% endblock %}</h1>
+        <ul class="nav">
+            <li><a href="/">Home</a></li>
+            {% if session.username %}
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/search">Search</a></li>
+                {% if session.role == 'admin' %}
+                    <li><a href="/admin">Admin</a></li>
+                {% endif %}
+                <li><a href="/logout">Logout</a></li>
+            {% else %}
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
+            {% endif %}
+        </ul>
+    </header>
+    
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    
+    <footer>
+        <p>This application is for educational purposes only. It demonstrates security vulnerabilities and their fixes.</p>
+    </footer>
+</body>
+</html>
